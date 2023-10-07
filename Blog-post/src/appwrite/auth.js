@@ -1,4 +1,4 @@
-import config from "../config/config";
+import conf from "../conf/conf";
 
 import { Client, Account, ID } from "appwrite";
 
@@ -8,14 +8,15 @@ export class AuthService {
 
     constructor(){
         this.client
-        .setEndpoint(config.appwriteUrl)
-        .setProject(config.appwriteProjectId);
+        .setEndpoint(conf.appwriteUrl)
+        .setProject(conf.appwriteProjectId);
 
         this.account =  new Account(this.client)
 
     }
 
     async createAccount({email,password,name}){
+        // eslint-disable-next-line no-useless-catch
         try {
             const userAccount = await this.account.create(ID.unique(),email,password,name);
             if(userAccount){
@@ -57,6 +58,6 @@ export class AuthService {
     }
 }
 
-const authService = new AuthService(config.appwriteUrl)
+const authService = new AuthService(conf.appwriteUrl)
 
 export default authService;
